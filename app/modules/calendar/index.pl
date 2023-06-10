@@ -35,22 +35,29 @@ process_option(6) :-
 process_option(_) :-
     write('Invalid choice'), nl.
 
-validateName(Name) :-
-    atom(Name),
-    \+ atom_length(Name, 0).
 
 adicionarEvento :-
     write('Nome do evento: '),
-    read(Nome), (validateName(Name) -> true; write('Nome inválido!'), nl, adicionarEvento),
+    read(Nome),
     write('Data do evento (DD/MM/AAAA): '),
-    read(Data),
+    write('Dia: '), read(Dia), 
+    write('Mês: '), read(Mes), 
+    write('Ano: '), read(Ano), 
     write('Escreva um Comentário: '),
     read(Comentario),
-    cadastrarEvento(Nome, Data, Comentario), 
+    cadastrarEvento(Nome, Dia, Mes, Ano, Comentario), 
     write('Evento cadastrado com sucesso!'), nl.
 
-cadastrarEvento(Nome, Data, Comentario):-
+cadastrarEvento(Nome, Dia, Mes, Ano, Comentario):-
+  Dia > 1 -> Dia =< 31,
+  Mes > 1 -> Mes =< 12,
+  Ano > 1950 -> Ano =< 2050,
+  Data = Dia/Mes/Ano,
+  write('Data válida!'), nl.
   #todo call insert DB
+
+cadastrarEvento(Nome, _, _, _, Comentario):-
+  write('Data inválida!'), nl, adicionarEvento.
 
 #todo formatacao listagem de eventos
 removerEvento :-
@@ -60,8 +67,10 @@ removerEvento :-
     read(Data),
     (removerEvento(Nome, Data) -> 
             write('Evento removido com sucesso!'), nl; write('Erro ao remover evento!'), nl).
-        
+
 removerEvento(Nome, Data):-
+    #call all in a list
+    #choice de remove one
     #todo call remove DB
 
 listarTodosEventos :-
