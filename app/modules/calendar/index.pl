@@ -33,8 +33,7 @@ process_option(6) :-
      write('Voltar'), nl. #todo voltar para tela incial
 
 process_option(_) :-
-    write('Invalid choice'), nl.
-
+    write('Opção inválida!'), nl.
 
 adicionarEvento :-
     write('Nome do evento: '),
