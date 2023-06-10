@@ -1,10 +1,14 @@
-:- module(model_chip, [getChips/1]).
+:- use_module(connection).
 
 getChips(Chips) :-
-    connect(Connection),
+    connectionMyDB(Connection),
     findall(Chip,
             odbc_query(Connection,
             'Select * from chips order by id',
             Chip),
         Chips
         ).
+
+main:-
+    getChips(Chips),
+    print(Chips).
