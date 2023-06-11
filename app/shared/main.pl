@@ -18,7 +18,7 @@ main :-
                 Op == 1       -> ln;
                 Op == 2       -> mainCalls;
                 Op == 3       -> mainMessage;
-                Op == 4       -> ln;
+                Op == 4       -> mainContacts;
                 Op == 5       -> ln;
                 writeln('Opcao invalida')
             ), main
