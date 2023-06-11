@@ -1,5 +1,6 @@
 :- use_module('../modules/call/main.pl').
 :- use_module('../modules/message/message.pl').
+:- use_module('../modules/contacts/index.pl').
 
 main :-
     writeln('-----------NOKIA------------'),   
