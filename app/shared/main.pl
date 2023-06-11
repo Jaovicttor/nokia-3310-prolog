@@ -1,4 +1,5 @@
-:- use_module(message).
+:- use_module('../modules/call/main.pl').
+:- use_module('../modules/message/message.pl').
 
 main :-
     writeln('-----------NOKIA------------'),   
@@ -15,7 +16,7 @@ main :-
         (
             (
                 Op == 1       -> ln;
-                Op == 2       -> lm;
+                Op == 2       -> mainCalls;
                 Op == 3       -> mainMessage;
                 Op == 4       -> ln;
                 Op == 5       -> ln;
@@ -23,5 +24,4 @@ main :-
             ), main
         )
         
-    )
-    .
+    ).
