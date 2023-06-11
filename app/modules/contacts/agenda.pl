@@ -1,8 +1,9 @@
+:- module(agenda, [mainAgenda/0]).
 :- include('util.pl').
 
 consult('dados.pl').
 
-mainContacts :-
+mainAgenda :-
     menuLoop.
 
 menuLoop :-
@@ -32,11 +33,13 @@ addContact():-
       write("Primeiro Nome:"),
       read(Nome),
       write("Contato:"),
-      read(Cpf),
-      contemMember(Nome,Resultado,Resultado2),
-      (Resultado2 -> usuarioCadastrado, menuLoop ; write("")),
+      read(Phone),
+
       lerArquivoCsv('dados.csv',Resultado),
-      cadastrarPessoa(Nome, Cpf),
+      contemMember(Nome, Resultado, Resultado2),
+      (Resultado2 -> usuarioCadastrado, menuLoop ; write("")),
+      
+      cadastrarPessoa(Nome, Phone),
       contatoCadastrado.
 
 

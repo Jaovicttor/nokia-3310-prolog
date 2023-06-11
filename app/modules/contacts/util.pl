@@ -2,7 +2,7 @@
 
 /* Ler um arquivo csv e retorna uma lista de lista. */
 lerArquivoCsv(Arquivo, Lists):-
-    atom_concat('nokia-3310-prolog/app/modules/contacts/data/', Arquivo, Path),
+    atom_concat('/Users/jhenriqueax/Desktop/PLP/data/', Arquivo, Path),
     csv_read_file(Path, Rows, []),
     rows_to_lists(Rows, Lists).
 
@@ -21,7 +21,7 @@ imprimirResultado([Lista|Resto]) :-
     imprimirResultado(Resto).
 
 cadastrarContato(Param):-
-    open('nokia-3310-prolog/app/modules/contacts/data/dados.csv', append, Fluxo),
+    open('/Users/jhenriqueax/Desktop/PLP/data/dados.csv', append, Fluxo),
     writeln(Fluxo, (Param)),
     close(Fluxo).
 
@@ -32,7 +32,7 @@ remove(X, [X|T], T).
 remove(X, [H|T], [H|T1]):- remove(X,T,T1).
 
 limpaCsv(Arquivo):-
-    atom_concat('nokia-3310-prolog/app/modules/contacts/data/', Arquivo, Path),
+    atom_concat('/Users/jhenriqueax/Desktop/PLP/data/', Arquivo, Path),
     open(Path, write, Fluxo),
     write(Fluxo, ''),
     close(Fluxo).
@@ -43,12 +43,14 @@ funcionariosExcluido:-
 reescrevePessoa([]).
 reescrevePessoa([H|T]):-
     nth0(0, H, Name), % Indice 0
-    cadastrarContato(Name),
+    nth0(1, H, Phone), % Indice 1
+    cadastrarPessoa(Name, Phone),
     reescrevePessoa(T).
 
-cadastrarPessoa(Cpf, Nome):-
-    open('nokia-3310-prolog/app/modules/contacts/data/dados.csv', append, Fluxo),
-    writeln(Fluxo, (Cpf, Nome)),
+
+cadastrarPessoa(Name, Phone):-
+    open('/Users/jhenriqueax/Desktop/PLP/data/dados.csv', append, Fluxo),
+    writeln(Fluxo, (Name, Phone)),
     close(Fluxo).
 
 contemMember(_, [], false).
