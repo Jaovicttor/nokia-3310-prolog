@@ -22,7 +22,7 @@ main :-
                 Op == 4       -> ln;
                 Op == 5       -> ln;
                 writeln('Opcao invalida')
-            ), main
-        )
+            ),
+        ),
         
     ).
