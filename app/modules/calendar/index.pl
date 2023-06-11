@@ -38,13 +38,13 @@ process_option(_) :-
 adicionarEvento :-
     write('Nome do evento: '),
     read(Nome),
-    write('Data do evento (DD/MM/AAAA): '),
+    write('Data do evento (DD/MM/AAAA): '), nl,
     write('Dia: '), read(Dia), 
     write('Mês: '), read(Mes), 
     write('Ano: '), read(Ano), 
     write('Escreva um Comentário: '),
     read(Comentario),
-    cadastrarEvento(Nome, Dia, Mes, Ano, Comentario), 
+    cadastrarEvento(Nome, Dia, Mes, Ano, Comentario),
     write('Evento cadastrado com sucesso!'), nl.
 
 cadastrarEvento(Nome, Dia, Mes, Ano, Comentario):-
@@ -52,11 +52,11 @@ cadastrarEvento(Nome, Dia, Mes, Ano, Comentario):-
   Mes > 1 -> Mes =< 12,
   Ano > 1950 -> Ano =< 2050,
   Data = Dia/Mes/Ano,
-  write('Data válida!'), nl.
+  write('Data válida!'), nl, !.
   #todo call insert DB
 
-cadastrarEvento(Nome, _, _, _, Comentario):-
-  write('Data inválida!'), nl, adicionarEvento.
+cadastrarEvento(_, _, _, _, _):-
+  write('Data inválida!'), nl.
 
 #todo formatacao listagem de eventos
 removerEvento :-
