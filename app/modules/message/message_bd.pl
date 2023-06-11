@@ -12,13 +12,14 @@ connect(Connection):-
 
 insertMessage(Message, Received_by):-
     connect(Connection),
+    get_time(Time),
     odbc_prepare(Connection,
             'insert into messages (message, message_date, sented_by, received_by ) values (?,?,?,?)',
-            [varchar, varchar, integer, integer],
+            [varchar, timestamp, integer, integer],
             Statement
         ),
     myChip(Chip_id),
-    odbc_execute(Statement, [Message, '2023-06-10 00:00:00.000', Chip_id, Received_by], _).
+    odbc_execute(Statement, [Message, Time, Chip_id, Received_by], _).
 
 findByNumber(Number, Chip):-
     connect(Connection),
