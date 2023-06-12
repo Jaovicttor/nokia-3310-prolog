@@ -91,8 +91,7 @@ addEvent :-
     write('Ano: '), read(Ano), 
     write('Escreva um Comentário: '), nl,
     read(Comentario),
-    registerEvent(Nome, Dia, Mes, Ano, Comentario),
-    writeln('Evento cadastrado com sucesso!'), 
+    registerEvent(Nome, Dia, Mes, Ano, Comentario), 
     writeln('-------------------------------------------'),
     menuCalendar.
 
@@ -102,6 +101,7 @@ registerEvent(Nome, Dia, Mes, Ano, Comentario):-
   Ano > 0 -> Ano =< 9999,
   Data = Dia/Mes/Ano,
   write('Data válida!'), 
+  writeln('Evento cadastrado com sucesso!'),
   addEventDB(Nome, Data, Comentario),
   nl, !.
 
@@ -122,7 +122,7 @@ removeEvent :-
     menuCalendar.
 
 rewriteEvent([]):-
-    write('Evento excluido com sucesso!').
+    writeln('Evento excluido com sucesso!').
 rewriteEvent([Head|Tail]):-
     writeCsv(Head),
     rewriteEvent(Tail).
