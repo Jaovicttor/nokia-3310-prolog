@@ -1,3 +1,4 @@
+:- module(calendar, [menuCalendar/0]).
 :-use_module(library(csv)).
 
 /* Metodos para persistência. */
