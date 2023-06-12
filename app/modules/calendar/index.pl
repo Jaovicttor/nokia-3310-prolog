@@ -12,12 +12,16 @@ row_to_list(Row, List):-
 
 listEvent :-
     lerArquivoCsv(Resultado),
-    imprimirResultado(Resultado).
+    imprimirResultado(Resultado, Resultado).
 
-imprimirResultado([]).
-imprimirResultado([Lista|Resto]) :-
-    write(index), writeln(Lista),
-    imprimirResultado(Resto).
+imprimirResultado([], _).
+imprimirResultado([Head|Tail], FirstList) :-
+    element_index(Head, FirstList, Index),
+    write(Index), write(' - '), writeln(Head),
+    imprimirResultado(Tail, FirstList).
+
+element_index(Element, List, Index) :-
+    nth1(Index, List, Element).
 
 addEventDB(Nome, Data, Comentario) :-
     open('/Users/lelefarias/Documents/nokia-3310-prolog/app/modules/calendar/data/dados.csv', append, Fluxo),
@@ -30,12 +34,18 @@ limpaCsv:-
     write(Fluxo, ''),
     close(Fluxo).
 
+writeCsv(Line):-
+    open('/Users/lelefarias/Documents/nokia-3310-prolog/app/modules/calendar/data/dados.csv', append, Fluxo),
+    format(Fluxo, '~w', Line),
+    close(Fluxo).
+
 menu :-
     write('Menu:'), nl,
     write('1. Adicionar Evento'), nl,
     write('2. Remover Evento'), nl,
     write('3. Listar Todos os Eventos'), nl,
-    write('4. Voltar'), nl,
+    write('4. Deletar Todos os Eventos'), nl,
+    write('5. Voltar'), nl,
     read_option(Choice),
     process_option(Choice).
 
@@ -53,6 +63,9 @@ process_option(3) :-
     write('Listar Todos os Eventos'), nl, listarTodosEventos. 
 
 process_option(4) :-
+    write('Deletas Todos os Eventos'), nl, limpaCsv, menu. 
+
+process_option(5) :-
      write('Voltar'), nl. 
 
 process_option(_) :-
@@ -72,14 +85,10 @@ adicionarEvento :-
     cadastrarEvento(Nome, Dia, Mes, Ano, Comentario),
     write('Evento cadastrado com sucesso!'), nl, menu.
 
-format_input(Input, FormattedInput) :-
-    atom_concat('\'', Input, Temp),
-    atom_concat(Temp, '\'', FormattedInput).
-
 cadastrarEvento(Nome, Dia, Mes, Ano, Comentario):-
-  Dia > 1 -> Dia =< 31,
-  Mes > 1 -> Mes =< 12,
-  Ano > 1950 -> Ano =< 2050,
+  Dia > 0 -> Dia =< 31,
+  Mes > 0 -> Mes =< 12,
+  Ano > 0 -> Ano =< 9999,
   Data = Dia/Mes/Ano,
   write('Data válida!'), 
   addEventDB(Nome, Data, Comentario),
@@ -98,25 +107,34 @@ removerEvento :-
     reescreveEvento(ListaEventosAtualizada),
     menu.
 
-reescreveEvento(List):-
-    csv_write_file('/Users/lelefarias/Documents/nokia-3310-prolog/app/modules/calendar/data/dados.csv', List),
+reescreveEvento([]):-
     write('Evento excluido com sucesso!').
+reescreveEvento([Head|Tail]):-
+    writeCsv(Head),
+    reescreveEvento(Tail).
+    
 
-remove_element_by_index(Index, List, NewList) :-
-    length(Prefix, Index),
+remove_element_by_index(Index, List, NewList):-
+    newIndex(Index, NI),
+    length(Prefix, NI),
     append(Prefix, [_|Suffix], List),
     append(Prefix, Suffix, NewList).
 
-
-delete_line_from_csv(File, LineNumber, NewFile) :-
-    csv_read_file(File, Rows),
-    select_line(Rows, LineNumber, NewRows),
-    csv_write_file(NewFile, NewRows),
-    write('Evento removido com sucesso!').
-
-select_line(Rows, LineNumber, NewRows) :-
-    nth1(LineNumber, Rows, _, RemovedRow),
-    select(RemovedRow, Rows, NewRows).
+newIndex(Index, Result):- 
+    Result is Index - 1.
 
 listarTodosEventos :-
   nl, listEvent, nl, menu.
+
+clean_csv_file(File) :-
+    csv_read_file(File, Rows),
+    process_rows(Rows, CleanedRows),
+    csv_write_file(File, CleanedRows, []).
+
+process_rows([], []).
+process_rows([Row | Rows], [CleanedRow | CleanedRows]) :-
+    process_row(Row, CleanedRow),
+    process_rows(Rows, CleanedRows).
+
+process_row(Row, CleanedRow) :-
+    exclude(=(unwanted_value), Row, CleanedRow).
