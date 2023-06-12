@@ -4,7 +4,7 @@
 
 /* Metodos para persistência. */
 readCsv(Lists):-
-    csv_read_file('../modules/calendar/data/dados.csv', Rows, []),
+    csv_read_file('./app/modules/calendar/data/dados.csv', Rows, []),
     rows_to_lists(Rows, Lists).
 
 rows_to_lists(Rows, Lists):- maplist(row_to_list, Rows, Lists).
@@ -26,18 +26,18 @@ element_index(Element, List, Index) :-
     nth1(Index, List, Element).
 
 addEventDB(Nome, Data, Comentario) :-
-    open('../modules/calendar/data/dados.csv', append, Fluxo),
+    open('./app/modules/calendar/data/dados.csv', append, Fluxo),
     nl(Fluxo),
     format(Fluxo, '~w  - ~w - ~w', [Nome, Data, Comentario]),
     close(Fluxo).
 
 cleanCsv:-
-    open('../modules/calendar/data/dados.csv', write, Fluxo),
+    open('./app/modules/calendar/data/dados.csv', write, Fluxo),
     write(Fluxo, ''),
     close(Fluxo).
 
 writeCsv(Line):-
-    open('../modules/calendar/data/dados.csv', append, Fluxo),
+    open('./app/modules/calendar/data/dados.csv', append, Fluxo),
     format(Fluxo, '~w', Line),
     close(Fluxo).
 
@@ -138,7 +138,7 @@ newIndex(Index, Result):-
 
 /* Listar */
 listAll :-
-  writeln('----------Listar Todos os Eventos---------'),
+  writeln('----------Listar Todos os Eventos----------'),
   nl, listEvent, nl,
- writeln('-------------------------------------------'),
+  writeln('-------------------------------------------'),
   menuCalendar.
