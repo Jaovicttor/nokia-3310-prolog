@@ -1,5 +1,6 @@
 :- use_module('../modules/call/main.pl').
 :- use_module('../modules/message/message.pl').
+:- use_module('../modules/contacts/agenda.pl').
 
 main :-
     writeln('-----------NOKIA------------'),   
@@ -15,13 +16,12 @@ main :-
         Op == 0       -> writeln("Desligando...");
         (
             (
-                Op == 1       -> ln;
+                Op == 1       -> mainAgenda;
                 Op == 2       -> mainCalls;
                 Op == 3       -> mainMessage;
                 Op == 4       -> ln;
                 Op == 5       -> ln;
                 writeln('Opcao invalida')
-            ), main
+            ),
         )
-        
     ).
