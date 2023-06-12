@@ -122,7 +122,7 @@ removeEvent :-
     menuCalendar.
 
 rewriteEvent([]):-
-    write('Evento excluido com sucesso!').
+    writeln('Evento excluido com sucesso!').
 rewriteEvent([Head|Tail]):-
     writeCsv(Head),
     rewriteEvent(Tail).
