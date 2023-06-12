@@ -13,3 +13,7 @@
 
     -  Testar e verificar se a conexão foi realizada com sucesso
     -  Ser feliz 
+
+## Executar
+    - Para executar entre no diretório clonado pelo git 
+    - Execute o comando swipl app/shared/main.pl  
