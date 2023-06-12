@@ -18,4 +18,4 @@
     - Para executar entre no diretório clonado pelo git 
     - Execute o comando swipl app/shared/main.pl  
 
-    *OBS* Para executar os módulos que utilizam um .csv como Banco de Dados, alterar os path dos arquivos que fazem chamada para o dados.csv com o caminho da sua máquina.
+    OBS: Para executar os módulos que utilizam um .csv como Banco de Dados, alterar os path dos arquivos que fazem chamada para o dados.csv com o caminho da sua máquina.
