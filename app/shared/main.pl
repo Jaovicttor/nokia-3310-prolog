@@ -1,9 +1,11 @@
 :- use_module('../modules/call/main.pl').
 :- use_module('../modules/message/message.pl').
 :- use_module('../modules/contacts/agenda.pl').
+:- use_module('../modules/alarm/index.pl').
 :- use_module('../modules/calendar/index.pl').
 
 main :-
+    thread_create(sistemAlarm, _, [detached(true)]),
     writeln('-----------NOKIA------------'),   
     writeln('1 - Contatos'),
     writeln('2 - Ligação'),
@@ -15,12 +17,12 @@ main :-
     read(Op),
     process(Op).
 
-process(0) :- writeln("Desligando...");
+process(0) :- writeln("Desligando...").
 process(1) :- mainAgenda.
 process(2) :- mainCalls.
 process(3) :- mainMessage.
 process(4) :- menuCalendar.
-process(5) :- writeln("Alarmes").
+process(5) :- mainAlarm.
 process(_) :- writeln("Opção inválida!"), main.
 
 main([]) :-
