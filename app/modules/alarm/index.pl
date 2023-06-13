@@ -119,7 +119,7 @@ updateAlarm :-
                         term_string(Timer,TimerString),
                         term_string(Title,TitleString),
                         term_string(Newtimer,NewtimerString),
-                        upAlarms(TimerString,NewtimerString,Title),
+                        upAlarms(TimerString,NewtimerString,TitleString),
                         writeln('Alterado com sucesso!'),
                         mainAlarm
                     ;   
@@ -152,5 +152,5 @@ sistemAlarm:-
     (E -> writeln('Alarme disparou'), sleep(20),sistemAlarm ; (sleep(20),sistemAlarm)).
 
 create_thread :-
-    thread_create(SistemAlarm, _, [detached(true)]).
+    thread_create(sistemAlarm, _, [detached(true)]).
 

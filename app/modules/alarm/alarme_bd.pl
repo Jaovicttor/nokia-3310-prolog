@@ -1,9 +1,9 @@
-:- module(alarme_bd, [connect/0, insertAlarm/2, getAlarms/1, deleteAlarms/1, checkAlarm/1,upAlarms/3,verificationAlarms/2]).
+:- module(alarme_bd, [connect/0, insertAlarm/2, getAlarms/1, deleteAlarms/1,upAlarms/3,verificationAlarms/2]).
 :- use_module(library(odbc)).
 :- use_module('../../modules/message/chip_bd.pl').
 
 connect:-
-    odbc_connect('nokia-3310', Connection, [alias(dbConn)]).
+    odbc_connect('nokia-3310',_, [alias(dbConn)]).
 
 insertAlarm(Timer, Title) :-
     myChip(Chip_id), 

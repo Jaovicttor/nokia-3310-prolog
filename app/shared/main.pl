@@ -17,7 +17,7 @@ main :-
     read(Op),
     process(Op).
 
-process(0) :- writeln("Desligando...");
+process(0) :- writeln("Desligando...").
 process(1) :- mainAgenda.
 process(2) :- mainCalls.
 process(3) :- mainMessage.
