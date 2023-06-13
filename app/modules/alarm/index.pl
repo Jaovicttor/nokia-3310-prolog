@@ -77,12 +77,11 @@ printAlarms([Alarm|Rest]) :-
 printAlarm(Alarm) :-
     arg(2, Alarm, Time),
     arg(3, Alarm, Title),
-    arg(4, Alarm, Active),
     arg(1,Time,Hora),
     arg(2,Time,Minutos),
     write('Time: '), format("~d:~d",[Hora,Minutos]),nl,
     write('Title: '), writeln(Title),
-    write('Active: '), writeln(Active).
+    nl.
 
 removeAlarm :-
     writeln('-----------'),
