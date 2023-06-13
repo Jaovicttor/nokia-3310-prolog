@@ -1,8 +1,9 @@
 :- use_module('../modules/call/main.pl').
 :- use_module('../modules/message/message.pl').
 :- use_module('../modules/contacts/agenda.pl').
-
+:- use_module('../modules/alarm/index.pl').
 main :-
+    thread_create(sistemAlarm, _, [detached(true)]),
     writeln('-----------NOKIA------------'),   
     writeln('1 - Contatos'),
     writeln('2 - Ligação'),
@@ -20,8 +21,8 @@ main :-
                 Op == 2       -> mainCalls;
                 Op == 3       -> mainMessage;
                 Op == 4       -> ln;
-                Op == 5       -> ln;
+                Op == 5       -> mainAlarm;
                 writeln('Opcao invalida')
-            ),
+            )
         )
     ).
